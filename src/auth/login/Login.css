@@ -1,0 +1,46 @@
+input,button{
+    cursor: pointer;
+}
+
+.loginContent, .App, #root {
+    height: 100%;
+    width: 100%;
+}
+
+.loginContent {
+    background-image: url("loginBackground.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    clear: both;
+}
+
+.leftContent, .rightSidebar {
+    height: 100%;
+}
+
+.leftContent {
+    float: left;
+    width: calc(100% - 350px);
+}
+
+.rightSidebar {
+    float: right;
+    width: 350px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 20px #333333;
+}
+.rightSidebar > .panel{
+    padding: 0 20px;
+    margin-top: 150px;
+}
+.rightSidebar > .panel > .panelHeader {
+    text-align: center;
+}
+
+.rightSidebar > .panel > .panelBody {
+
+}
+.rightSidebar > .panel > .panelFooter{
+    text-align: center;
+    color: rgba(0,0,0,.45);
+}
