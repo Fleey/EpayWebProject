@@ -1,8 +1,8 @@
 import React from 'react'
 
-import './DashBoardPage.css';
+import './dashboard.css';
 
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import {Statistic, Row, Col, Timeline} from 'antd';
 import {Line, Pie} from '@antv/g2plot';
 
@@ -102,7 +102,7 @@ const data = [
     }, {"date": "2020-10-07 ", "time": "22:00", "value": 85}, {"date": "2020-10-07 ", "time": "23:00", "value": 107}
 ];
 
-class DashBoardPage extends React.Component {
+class Dashboard extends React.Component {
 
     componentDidMount() {
 
@@ -211,4 +211,4 @@ class DashBoardPage extends React.Component {
     }
 }
 
-export default DashBoardPage;
+export default Dashboard;

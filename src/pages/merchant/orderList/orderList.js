@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './OrderList.css';
+import './orderList.css';
 
 import {Table, Tag, Space} from 'antd';
 

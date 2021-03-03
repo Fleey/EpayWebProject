@@ -1,5 +1,5 @@
 import React from 'react';
-import './Login.css';
+import './style/login.css';
 import {Button,Form, Input,Checkbox} from 'antd';
 
 function Login() {

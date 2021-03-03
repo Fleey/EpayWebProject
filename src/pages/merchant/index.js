@@ -1,24 +1,24 @@
 import React from 'react'
-import Sidebar from "./sidebar/Sidebar";
+import Sidebar from "./siderbar/siderbar";
 
 import './User.css';
 
 import {Layout, Menu, Breadcrumb} from 'antd';
-import {Router, Route, hashHistory} from 'react-router'
-import DashBoardPage from "./dashboard/DashBoardPage";
-import NotFoundPage from "../notFoundPage/NotFoundPage";
-import OrderList from "./orderList/OrderList";
+import {BrowserRouter, Route} from 'react-router-dom'
+import Dashboard from "./dashboard/dashboard";
+import NotFoundPage from "../404/404";
+import OrderList from "./orderList/orderList";
 
 
 const {Header, Content, Footer, Sider} = Layout;
 
 
 const routes = (
-    <Route path="User">
-        <Route path="Dashboard" component={DashBoardPage}/>
+    <BrowserRouter path="User">
+        <Route path="Dashboard" component={Dashboard}/>
         <Route path="OrderList" component={OrderList}/>
         <Route path="*" component={NotFoundPage}/>
-    </Route>
+    </BrowserRouter>
 );
 
 

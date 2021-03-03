@@ -1,9 +1,9 @@
 import React from "react";
-import './IndexPage.css';
+import './style/index.css';
 
 import {Result} from 'antd';
 
-function IndexPage() {
+function Index() {
     document.title = '首页';
 
     return (
@@ -15,4 +15,4 @@ function IndexPage() {
     );
 }
 
-export default IndexPage;
+export default Index;

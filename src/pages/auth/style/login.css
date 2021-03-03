@@ -8,7 +8,7 @@ input,button{
 }
 
 .loginContent {
-    background-image: url("loginBackground.jpg");
+    background-image: url("src/pages/auth/images/loginBackground.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     clear: both;

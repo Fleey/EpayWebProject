@@ -1,4 +1,4 @@
-import './NotFoundPage.css';
+import './404.css';
 
 import React from "react";
 
