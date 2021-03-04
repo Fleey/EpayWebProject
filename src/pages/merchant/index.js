@@ -1,24 +1,23 @@
 import React from 'react'
-import Sidebar from "./siderbar/siderbar";
+import Sidebar from "./siderbar/siderbar"
 
-import './User.css';
+import './index.css'
+import './siderbar/menus'
 
-import {Layout, Menu, Breadcrumb} from 'antd';
-import {BrowserRouter, Route} from 'react-router-dom'
-import Dashboard from "./dashboard/dashboard";
-import NotFoundPage from "../404/404";
-import OrderList from "./orderList/orderList";
+import {Layout, Menu, Breadcrumb} from 'antd'
+import {Route} from 'react-router-dom'
+import Dashboard from "./dashboard/dashboard"
 
+import OrderList from "./orderList/orderList"
 
 const {Header, Content, Footer, Sider} = Layout;
 
 
 const routes = (
-    <BrowserRouter path="User">
-        <Route path="Dashboard" component={Dashboard}/>
-        <Route path="OrderList" component={OrderList}/>
-        <Route path="*" component={NotFoundPage}/>
-    </BrowserRouter>
+    <div>
+        <Route path="/merchant/dashboard" component={Dashboard} exact={true}/>
+        <Route path="/merchant/orderList" component={OrderList} exact={true}/>
+    </div>
 );
 
 
@@ -31,11 +30,11 @@ class User extends React.Component {
 
         let pathname = this.props.location.pathname;
 
-        global.user.menus.map(item => {
+        global.user.menus.forEach(item => {
             if (item.subs && item.subs.length > 0) {
                 //二级菜单
 
-                item.subs && item.subs.map(subItem => {
+                item.subs && item.subs.forEach(subItem => {
                     if (subItem.key === pathname) {
                         itemLayer.push(item.title, subItem.title);
                     }
@@ -61,7 +60,6 @@ class User extends React.Component {
     }
 
     render() {
-
         return (
             <Layout className="userLayout">
                 <Header className="header">
@@ -85,12 +83,14 @@ class User extends React.Component {
 
                         {/*Content start*/}
                         <Content style={{padding: '0 24px', minHeight: 280}}>
-                            <Router history={hashHistory} routes={routes}/>
+                            {routes}
                         </Content>
                         {/*contentMain end*/}
                     </Layout>
                 </Content>
-                <Footer style={{textAlign: 'center'}}>Design by Fleey © {new Date().getFullYear()} Epay </Footer>
+                <Footer style={{textAlign: 'center'}}>
+                    Design by {process.env.APP_AUTHOR} © {new Date().getFullYear()} {process.env.APP_NAME}
+                </Footer>
             </Layout>
         );
     }

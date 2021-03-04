@@ -5,7 +5,6 @@ import {Result} from 'antd';
 
 function Index() {
     document.title = '首页';
-
     return (
         <Result
             status="404"

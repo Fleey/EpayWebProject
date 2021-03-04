@@ -6,8 +6,6 @@ import 'antd/dist/antd.css';
 
 import App from './App';
 
-import './config';
-
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

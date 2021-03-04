@@ -1,11 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import '../../config';
+
 
 import {Menu} from 'antd';
 import {Icon} from '@ant-design/compatible';
 
+import './menus';
 
 const menus = global.user.menus;
 
@@ -46,11 +47,11 @@ class Sidebar extends React.Component {
     getSelectMenuTitle() {
         let titleName = '';
 
-        menus.map(item => {
+        menus.forEach(item => {
             if (item.subs && item.subs.length > 0) {
                 //二级菜单
 
-                item.subs && item.subs.map(subItem => {
+                item.subs && item.subs.forEach(subItem => {
                     if (subItem.key === this._pathname) {
                         titleName = subItem.title;
                     }
@@ -78,7 +79,7 @@ class Sidebar extends React.Component {
         return (
             <Menu
                 defaultSelectedKeys={[this._pathname]}
-                defaultOpenKeys={['/User/WxPay']}
+                defaultOpenKeys={['/user/wechatPay']}
                 mode="inline"
                 onClick={this.sidebarMenuClickEvent.bind(this)}
             >

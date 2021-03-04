@@ -2,7 +2,7 @@ import React from 'react'
 
 import './orderList.css';
 
-import {Table, Tag, Space} from 'antd';
+import {Table, Space} from 'antd';
 
 
 const columns = [
@@ -39,7 +39,7 @@ const columns = [
             <div>
                 <text>{text}</text>
                 <br/>
-                <text>{record.endTime??'未完成支付'}</text>
+                <text>{record.endTime ?? '未完成支付'}</text>
             </div>
         )
     },
@@ -58,9 +58,9 @@ const columns = [
         render: (text, record) => (
             <Space size="middle">
                 {/*<a>Invite {record.name}</a>*/}
-                <a>详细</a>
-                <a>退款</a>
-                <a>重新通知</a>
+                <a href={"#"}>详细</a>
+                <a href={"#"}>退款</a>
+                <a href={"#"}>重新通知</a>
             </Space>
         ),
     },

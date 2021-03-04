@@ -4,40 +4,40 @@ global.user.menus = [
     {
         'title': '仪表盘',
         'icon': 'dashboard',
-        'key': '/User/Dashboard',
+        'key': '/merchant/dashboard',
     }, {
         'title': '订单列表',
         'icon': 'profile',
-        'key': '/User/OrderList'
+        'key': '/merchant/orderList'
     }, {
         'title': '申请提现',
         'icon': 'transaction',
-        'key': '/User/ApplySettle'
+        'key': '/merchant/applySettle'
     }, {
         'title': '余额充值',
         'icon': 'pay-circle',
-        'key': '/User/RechargeBalance'
+        'key': '/merchant/rechargeBalance'
     }, {
-        'title':'个人资料',
-        'icon':'idcard',
-        'key':'/User/Info'
+        'title': '个人资料',
+        'icon': 'idcard',
+        'key': '/merchant/info'
     },
     {
         'title': '支付宝管理',
         'icon': 'alipay',
-        'key': '/User/AliPay/AccountList'
+        'key': '/merchant/aliPay/accountList'
     }, {
         'title': '微信支付管理',
         'icon': 'message',
-        'key': '/User/WxPay',
+        'key': '/merchant/wechatPay',
         'subs': [
             {
                 'title': '个人资料信息',
-                'key': '/User/WxPay/WxMicroAccount',
+                'key': '/merchant/wechatPay/wechatMicroAccount',
                 'icon': ''
             }, {
                 'title': '订单投诉列表',
-                'key': '/User/WxPay/OrderComplain',
+                'key': '/merchant/wechatPay/orderComplain',
                 'icon': ''
             }
         ]
