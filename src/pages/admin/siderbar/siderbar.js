@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 
-
 import {Menu} from 'antd';
 import {Icon} from '@ant-design/compatible';
 
@@ -27,7 +26,7 @@ class Sidebar extends React.Component {
     renderMenuItem = ({key, icon, title,}) => {
         return (
             <Menu.Item key={key} title={title}>
-                <Link to={key} onlyActiveOnIndex>
+                <Link to={key}>
                     {icon && <Icon type={icon}/>}
                     <span>{title}</span>
                 </Link>
@@ -76,10 +75,12 @@ class Sidebar extends React.Component {
     render() {
         document.title = this.getSelectMenuTitle() + ' - 用户中心';
 
+        let defaultOpenKey = this._pathname.substr(0, this._pathname.lastIndexOf("/"))
+
         return (
             <Menu
                 defaultSelectedKeys={[this._pathname]}
-                defaultOpenKeys={['/user/wechatPay']}
+                defaultOpenKeys={[defaultOpenKey]}
                 mode="inline"
                 onClick={this.sidebarMenuClickEvent.bind(this)}
             >

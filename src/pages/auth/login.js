@@ -47,7 +47,7 @@ function Login() {
                         </Form>
                     </div>
                     <div className="panelFooter">
-                       Design by Fleey © { new Date().getFullYear()} Epay
+                       Design by {process.env.APP_AUTHOR} © { new Date().getFullYear()} {process.env.APP_NAME}
                     </div>
                 </div>
             </div>

@@ -5,19 +5,21 @@ import './index.css'
 import './siderbar/menus'
 
 import {Layout, Menu, Breadcrumb} from 'antd'
-import {Route} from 'react-router-dom'
-import Dashboard from "./dashboard/dashboard"
+import {Route,Switch} from 'react-router-dom'
 
+import Dashboard from "./dashboard/dashboard"
 import OrderList from "./orderList/orderList"
+import NotFoundPage from "../404/404";
 
 const {Header, Content, Footer, Sider} = Layout;
 
 
 const routes = (
-    <div>
-        <Route path="/merchant/dashboard" component={Dashboard} exact={true}/>
-        <Route path="/merchant/orderList" component={OrderList} exact={true}/>
-    </div>
+    <Switch>
+        <Route path="/admin/dashboard" component={Dashboard} exact={true}/>
+        <Route path="/admin/orderList" component={OrderList} exact={true}/>
+        <Route path="/admin/*" component={NotFoundPage} exact={true}/>
+    </Switch>
 );
 
 
@@ -25,7 +27,7 @@ class User extends React.Component {
 
     renderBreadCrumb() {
         let itemLayer = [
-            '用户中心'
+            '管理后台'
         ];
 
         let pathname = this.props.location.pathname;
@@ -66,7 +68,7 @@ class User extends React.Component {
                     <div className="logo"/>
                     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
                         <Menu.Item key="1">首页</Menu.Item>
-                        <Menu.Item key="2">用户中心</Menu.Item>
+                        <Menu.Item key="2">管理后台</Menu.Item>
                         <Menu.Item key="3">API 文档</Menu.Item>
                     </Menu>
                 </Header>
