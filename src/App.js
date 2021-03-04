@@ -8,6 +8,8 @@ import Login from "./pages/auth/login";
 // import Index from "./pages/index/index";
 import User from "./pages/admin/index";
 
+import {requireAuth} from "./models/auth/userAuth"
+
 function App() {
     return (
         <div className="App">
@@ -16,7 +18,7 @@ function App() {
                     <Redirect from="/" to="/auth/login" exact={true}/>
                     <Route path="/auth/login" component={Login} exact={true}/>
                     <Redirect from="/admin" to="/admin/dashboard" exact={true}/>
-                    <Route path="/admin/*" component={User} exact={true}/>
+                    <Route path="/admin/*" component={props => requireAuth(User, props)} exact={true}/>
                     <Route path="*" component={NotFoundPage}/>
                 </Switch>
             </BrowserRouter>
