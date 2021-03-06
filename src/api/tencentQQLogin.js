@@ -17,6 +17,7 @@ export const checkQrCodeStatus = ({qrsig}) => request.get(`/management/payPlugin
  * 获取
  * @param uin
  * @param mchid
+ * @param status
  * @param page
  * @param pagesize
  * @returns {Promise<AxiosResponse<any>>}
@@ -24,15 +25,11 @@ export const checkQrCodeStatus = ({qrsig}) => request.get(`/management/payPlugin
 export const getQQLoginList = ({
                                    uin,
                                    mchid,
+                                   status,
                                    page,
                                    pagesize
-                               }) => request.get(`/management/payPlugins/tencentPay/qqLogin/list`, {
-    data: {
-        uin: uin,
-        mchid: mchid,
-        page: page,
-        pagesize: pagesize
-    }
+                               }) => request({
+    url: `/management/payPlugins/tencentPay/qqLogin/list?uin=${uin}&mchid=${mchid}&status=${status}`, method: 'get'
 })
 
 /**
@@ -52,3 +49,14 @@ export const updateQQAccountRemark = ({
                                           tacid,
                                           remark
                                       }) => request.patch(`/management/payPlugins/tencentPay/qqLogin/${tacid}/remark`, {remark: remark})
+
+/**
+ * 更新QQ账号mchid
+ * @param tacid
+ * @param mchid
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const updateQQAccountMchId = ({
+                                         tacid,
+                                         mchid
+                                     }) => request.patch(`/management/payPlugins/tencentPay/qqLogin/${tacid}/mchid`, {mchid: mchid})

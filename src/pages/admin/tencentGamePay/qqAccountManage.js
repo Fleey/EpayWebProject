@@ -1,10 +1,10 @@
 import React, {useContext, useState, useEffect, useRef} from 'react'
 
-import {Button, Col, Input, message, Popconfirm, Row, Table, Form} from "antd";
+import {Button, Col, Input, message, Popconfirm, Row, Table, Form, Select} from "antd";
 import {Content} from "antd/es/layout/layout";
 import {SearchOutlined} from '@ant-design/icons';
 
-import {deleteQQAccount, getQQLoginList, updateQQAccountRemark} from '../../../api/tencentQQLogin'
+import {deleteQQAccount, getQQLoginList, updateQQAccountMchId, updateQQAccountRemark} from '../../../api/tencentQQLogin'
 import Text from "antd/es/typography/Text";
 import {formatDate} from "../../../utils/help";
 
@@ -99,7 +99,8 @@ class QQAccountManage extends React.Component {
         }, {
             title: "商户号",
             dataIndex: "mchid",
-            key: "mchid"
+            key: "mchid",
+            editable: true,
         }, {
             title: "QQ号",
             dataIndex: "uin",
@@ -153,6 +154,16 @@ class QQAccountManage extends React.Component {
         },
         dataSource: [],
         isLoadingTable: false,
+
+        filterQQ: null,
+        filterMchId: null,
+        filterStatus: null,
+
+        queryParams: {
+            qq: null,
+            mchid: null,
+            status: null
+        }
     }
 
     handleDeleteAccount = async ({tacid}) => {
@@ -180,9 +191,12 @@ class QQAccountManage extends React.Component {
             isLoadingTable: true
         })
 
+        const {queryParams} = this.state
+
         let {data: {list, total}} = await getQQLoginList({
-            uin: 0,
-            mchid: 0,
+            uin: queryParams.qq ? queryParams.qq : '',
+            mchid: queryParams.mchid ? queryParams.mchid : '',
+            status: queryParams.status ? queryParams.status : '',
             page: current,
             pagesize: pageSize
         })
@@ -198,28 +212,53 @@ class QQAccountManage extends React.Component {
         })
     }
 
-    handleSaveAccount = async (row) => {
-        let {tacid, remark} = row
+    handleSaveAccountInfo = async (row) => {
+        let {tacid, remark, mchid} = row
+
+        const sourceData = [...this.state.dataSource];
+        const index = sourceData.findIndex((item) => row.key === item.key);
+        const sourceRow = sourceData[index];
 
         try {
             this.setState({
                 isLoadingTable: true
             })
 
-            await updateQQAccountRemark({tacid: tacid, remark: remark})
+            if (remark !== sourceRow['remark'])
+                await updateQQAccountRemark({tacid: tacid, remark: remark})
+            if (mchid !== sourceRow['mchid'])
+                await updateQQAccountMchId({tacid: tacid, mchid: mchid})
 
             const {pagination} = this.state
 
             this.handleTableChange({current: pagination["current"], pageSize: pagination["pageSize"], total: 0}, {}, {})
         } catch (e) {
-            message.error(e.message)
+            message.error(e.msg)
         } finally {
             this.setState({
                 isLoadingTable: false
             })
         }
+    }
 
-        console.log(tacid, remark)
+    /**
+     *更新查询参数
+     */
+    searchBtnClick = () => {
+        const {filterQQ, filterMchId, filterStatus, pagination} = this.state
+        this.setState({
+            queryParams: {
+                qq: filterQQ,
+                mchid: filterMchId,
+                status: filterStatus
+            }
+        }, () => {
+            this.setState({
+                isLoadingTable: true
+            })
+
+            this.handleTableChange({current: pagination["current"], pageSize: pagination["pageSize"], total: 0}, {}, {})
+        })
     }
 
     componentDidMount() {
@@ -249,7 +288,7 @@ class QQAccountManage extends React.Component {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
-                    handleSave: this.handleSaveAccount,
+                    handleSave: this.handleSaveAccountInfo,
                 }),
             };
         });
@@ -260,13 +299,26 @@ class QQAccountManage extends React.Component {
                     <div className={'left-search'} style={{float: 'left', display: "block"}}>
                         <Row gutter={[14, 0]}>
                             <Col>
-                                <Input placeholder="QQ号"/>
+                                <Input placeholder="QQ号" onChange={(e) => {
+                                    this.setState({filterQQ: e.target.value})
+                                }}/>
                             </Col>
                             <Col>
-                                <Input placeholder="商户号"/>
+                                <Input placeholder="商户号" onChange={(e) => {
+                                    this.setState({filterMchId: e.target.value})
+                                }}/>
                             </Col>
                             <Col>
-                                <Button type="primary">
+                                <Select placeholder="账号状态" onChange={(value) => {
+                                    this.setState({filterStatus: value})
+                                }} style={{width: 120}}
+                                        allowClear>
+                                    <Select.Option value="1">正常</Select.Option>
+                                    <Select.Option value="2">过期</Select.Option>
+                                </Select>
+                            </Col>
+                            <Col>
+                                <Button type="primary" onClick={this.searchBtnClick}>
                                     <SearchOutlined/>搜索
                                 </Button>
                             </Col>
