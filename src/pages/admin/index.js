@@ -5,11 +5,12 @@ import './index.css'
 import './siderbar/menus'
 
 import {Layout, Menu, Breadcrumb} from 'antd'
-import {Route,Switch} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 
 import Dashboard from "./dashboard/dashboard"
 import OrderList from "./orderList/orderList"
 import NotFoundPage from "../404/404";
+import QQAccountManage from './tencentGamePay/qqAccountManage'
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -18,6 +19,7 @@ const routes = (
     <Switch>
         <Route path="/admin/dashboard" component={Dashboard} exact={true}/>
         <Route path="/admin/orderList" component={OrderList} exact={true}/>
+        <Route path="/admin/tencentPay/qqAccountManage" component={QQAccountManage} exact={true}/>
         <Route path="/admin/*" component={NotFoundPage} exact={true}/>
     </Switch>
 );
@@ -54,7 +56,7 @@ class User extends React.Component {
             <Breadcrumb style={{margin: '16px 0'}}>
                 {
                     itemLayer.map(item => {
-                        return <Breadcrumb.Item>{item}</Breadcrumb.Item>
+                        return <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>
                     })
                 }
             </Breadcrumb>

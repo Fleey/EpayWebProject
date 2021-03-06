@@ -8,8 +8,16 @@ import App from './App';
 
 import * as serviceWorker from './serviceWorker';
 
+import moment from 'moment';
+import {ConfigProvider} from "antd";
+import zhCN from 'antd/lib/locale/zh_CN';
+
+moment.locale('zh-cn')
+
 ReactDOM.render(
-    <App/>,
+    <ConfigProvider locale={zhCN}>
+        <App/>
+    </ConfigProvider>,
     document.getElementById('root')
 );
 

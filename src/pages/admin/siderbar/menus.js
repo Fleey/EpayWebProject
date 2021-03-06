@@ -16,7 +16,7 @@ global.user.menus = [
         'subs': [
             {
                 'title': 'QQ账号管理',
-                'key': '/admin/tencentPay/wechatMicroAccount',
+                'key': '/admin/tencentPay/qqAccountManage',
                 'icon': ''
             }, {
                 'title': '订单投诉列表',
