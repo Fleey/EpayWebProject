@@ -7,6 +7,7 @@ import {SearchOutlined} from '@ant-design/icons';
 import {deleteQQAccount, getQQLoginList, updateQQAccountMchId, updateQQAccountRemark} from '../../../api/tencentQQLogin'
 import Text from "antd/es/typography/Text";
 import {formatDate} from "../../../utils/help";
+import {AddQQAccount} from "./addQQAccount";
 
 const EditableContext = React.createContext(null);
 
@@ -140,9 +141,12 @@ class QQAccountManage extends React.Component {
             dataIndex: 'operation',
             render: (_, record: { key: React.Key }) =>
                 this.state.dataSource.length >= 1 ? (
-                    <Popconfirm title="确定要删除?" onConfirm={() => this.handleDeleteAccount({tacid: record.tacid})}>
-                        <a>删除</a>
-                    </Popconfirm>
+                    <div>
+                        <a style={{marginRight: 10}}>关联商品</a>
+                        <Popconfirm title="确定要删除?" onConfirm={() => this.handleDeleteAccount({tacid: record.tacid})}>
+                            <a>删除</a>
+                        </Popconfirm>
+                    </div>
                 ) : null,
         },
     ]
@@ -261,6 +265,11 @@ class QQAccountManage extends React.Component {
         })
     }
 
+    addQQAccountCallback = (props) => {
+        const {pagination} = this.state
+        this.handleTableChange({current: pagination["current"], pageSize: pagination["pageSize"], total: 0}, {}, {})
+    }
+
     componentDidMount() {
         this.handleTableChange({current: 1, pageSize: 20, total: 0}, {}, {})
     }
@@ -325,7 +334,7 @@ class QQAccountManage extends React.Component {
                         </Row>
                     </div>
                     <div className={'right-btn'} style={{float: 'right', display: "block"}}>
-                        <Button type="primary">添加QQ账号</Button>
+                        <AddQQAccount onFinish={this.addQQAccountCallback}/>
                     </div>
                     <div style={{clear: "both"}}></div>
                 </div>

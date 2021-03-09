@@ -60,3 +60,10 @@ export const updateQQAccountMchId = ({
                                          tacid,
                                          mchid
                                      }) => request.patch(`/management/payPlugins/tencentPay/qqLogin/${tacid}/mchid`, {mchid: mchid})
+
+/**
+ * 保存QQ账号Cookie
+ * @param cookie
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const saveQQAccountCookie = ({cookie})=>request.post(`/management/payPlugins/tencentPay/qqLogin/accountCookie`,{cookie:cookie})

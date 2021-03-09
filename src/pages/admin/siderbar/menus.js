@@ -19,7 +19,7 @@ global.user.menus = [
                 'key': '/admin/tencentPay/qqAccountManage',
                 'icon': ''
             }, {
-                'title': '订单投诉列表',
+                'title': '数据统计',
                 'key': '/admin/tencentPay/orderComplain',
                 'icon': ''
             }
