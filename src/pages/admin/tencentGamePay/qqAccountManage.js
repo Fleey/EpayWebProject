@@ -8,6 +8,7 @@ import {deleteQQAccount, getQQLoginList, updateQQAccountMchId, updateQQAccountRe
 import Text from "antd/es/typography/Text";
 import {formatDate} from "../../../utils/help";
 import {AddQQAccount} from "./addQQAccount";
+import {SelectProduct} from "./selectProduct"
 
 const EditableContext = React.createContext(null);
 
@@ -142,7 +143,7 @@ class QQAccountManage extends React.Component {
             render: (_, record: { key: React.Key }) =>
                 this.state.dataSource.length >= 1 ? (
                     <div>
-                        <a style={{marginRight: 10}}>关联商品</a>
+                        <SelectProduct tacid={record.tacid} style={{marginRight: 10}}>关联商品</SelectProduct>
                         <Popconfirm title="确定要删除?" onConfirm={() => this.handleDeleteAccount({tacid: record.tacid})}>
                             <a>删除</a>
                         </Popconfirm>

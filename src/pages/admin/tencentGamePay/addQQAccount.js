@@ -145,7 +145,7 @@ export class AddQQAccount extends React.Component {
         let authorizationCode = this.authorizationCodeInputRef.current.resizableTextArea.textArea.value
 
         try {
-            let ret = await saveQQAccountCookie({cookie:authorizationCode})
+            await saveQQAccountCookie({cookie: authorizationCode})
 
             notification.success({
                 message: '保存成功',
