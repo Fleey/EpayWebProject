@@ -36,3 +36,42 @@ export const getProductZoneRole = ({
                                        zoneId,
                                        tacid
                                    }) => request.get(`/management/payPlugins/tencentPay/product/${productId}/zone/${zoneId}/role?tacid=${tacid}`)
+
+
+/**
+ * 获取收款账号商品列表
+ * @param tacid
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getProductAccount = ({tacid}) => request.get(`/management/payPlugins/tencentPay/product/account?tacid=${tacid}`)
+
+/**
+ * 添加商品收款账号
+ * @param productid
+ * @param zoneid
+ * @param tacid
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const addProductAccount = ({
+                                      productid,
+                                      zoneid,
+                                      tacid
+                                  }) => request.post(`/management/payPlugins/tencentPay/product/${productid}/zone/${zoneid}/account`, {tacid: tacid})
+
+
+/**
+ * 删除商品收款账号
+ * @param productid
+ * @param zoneid
+ * @param tacid
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const deleteProductAccount = ({
+                                         productid,
+                                         zoneid,
+                                         tacid
+                                     }) => request.delete(`/management/payPlugins/tencentPay/product/${productid}/zone/${zoneid}/account`, {
+    data: {
+        tacid: tacid
+    }
+})

@@ -14,7 +14,7 @@ export const getLoginQrCode = () => request.get('/management/payPlugins/tencentP
 export const checkQrCodeStatus = ({qrsig}) => request.get(`/management/payPlugins/tencentPay/qqLogin/checkQrCodeStatus?qrsig=${qrsig}`)
 
 /**
- * 获取
+ * 获取QQ登陆账号列表
  * @param uin
  * @param mchid
  * @param status

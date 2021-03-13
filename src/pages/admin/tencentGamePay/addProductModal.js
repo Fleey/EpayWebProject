@@ -1,7 +1,11 @@
 import React from "react";
-import {Alert, Button, Col, message, Modal, Row, Select, Spin} from "antd";
+import {Button, Col, message, Modal, Row, Select, Spin} from "antd";
 import {Option} from "antd/es/mentions";
-import {getProductList, getProductZoneList} from "../../../api/tencentProduct";
+import {addProductAccount, getProductList, getProductZoneList} from "../../../api/tencentProduct";
+
+import throttle from 'lodash/throttle';
+import {FallOutlined} from "@ant-design/icons";
+
 
 export class AddProductModal extends React.Component {
     state = {
@@ -14,8 +18,15 @@ export class AddProductModal extends React.Component {
         selectPlatformType: 0,
         optionProductList: [],
         optionProductZoneList: [],
-        userProductZoneRoleName: ''
+        userProductZoneRoleName: '',
+        productid: 0,
+        zoneid: 0,
     }
+
+    searchProductCallback = throttle(() => {
+        let {selectPlatformType, searchValue} = this.state
+        this.loadProductList({changeValue: selectPlatformType, name: searchValue})
+    }, 1000, {leading: false})
 
     startAddRelationProduct = () => {
         this.setState({
@@ -38,7 +49,7 @@ export class AddProductModal extends React.Component {
                 optionProductList: [],
                 optionProductZoneList: [],
                 userProductZoneRoleName: '',
-                isDisabledSelectProductName: true,
+                // isDisabledSelectProductName: true,
                 isDisabledSelectProductZone: true,
             })
 
@@ -100,7 +111,6 @@ export class AddProductModal extends React.Component {
 
             this.setState({
                 optionProductZoneList: tmp,
-                isDisabledAddProductBtn: false
             })
         } catch (e) {
             message.error(e.msg)
@@ -116,6 +126,34 @@ export class AddProductModal extends React.Component {
         }
     }
 
+    addProductZoneAccount = async () => {
+
+        let {productid, zoneid} = this.state
+
+        this.setState({
+            isLoadingModel: true
+        });
+
+        try {
+            addProductAccount({productid: productid, zoneid: zoneid, tacid: this.props.tacid})
+
+            message.success("添加商品收款成功")
+
+            this.setState({
+                isLoadingModel: false,
+                isModalVisible: false
+            });
+
+            this.props.onFinish()
+        } catch (e) {
+            message.error(e.msg)
+            this.setState({
+                isLoadingModel: false
+            });
+        }
+
+    }
+
     render() {
         let {
             isModalVisible,
@@ -123,7 +161,6 @@ export class AddProductModal extends React.Component {
             isLoadingSelectProductName,
             isLoadingSelectProductZone,
             isDisabledSelectProductZone,
-            userProductZoneRoleName,
             selectPlatformType,
             isDisabledAddProductBtn,
             isLoadingModel
@@ -144,7 +181,8 @@ export class AddProductModal extends React.Component {
                            }}>
                                取消
                            </Button>,
-                           <Button key="submit" type="primary" disabled={isDisabledAddProductBtn} onClick={{}}>
+                           <Button key="submit" type="primary" disabled={isDisabledAddProductBtn}
+                                   onClick={this.addProductZoneAccount}>
                                添加
                            </Button>,
                        ]}
@@ -173,7 +211,10 @@ export class AddProductModal extends React.Component {
                                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                         }
                                         onSearch={(searchValue) => {
-                                            this.loadProductList({changeValue: selectPlatformType, name: searchValue})
+                                            this.setState({
+                                                searchValue: searchValue,
+                                                selectPlatformType: selectPlatformType
+                                            }, this.searchProductCallback)
                                         }}
                                         onClear={() => {
                                             this.loadProductList({changeValue: selectPlatformType, name: ''})
@@ -190,20 +231,15 @@ export class AddProductModal extends React.Component {
                                         filterOption={(input, option) =>
                                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                         }
+                                        onChange={((value, option) => {
+                                            this.setState({
+                                                productid: option.productid,
+                                                zoneid: option.value
+                                            });
+                                        })}
                                         showSearch>
                                     {optionProductZoneList}
                                 </Select>
-                            </Col>
-                            <Col span={24} style={{
-                                marginTop: "1rem",
-                                display: (userProductZoneRoleName === '' ? 'none' : 'block')
-                            }}>
-                                <Alert
-                                    message="获取商品大区角色成功"
-                                    description={<p>您的游戏名称为 <b>{userProductZoneRoleName}</b></p>}
-                                    type="success"
-                                    showIcon
-                                />
                             </Col>
                         </Row>
                     </Spin>
